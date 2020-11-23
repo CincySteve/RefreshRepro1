@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+    {
+    /// <summary>
+    /// This method gets invoked only once, when the app starts up, because ME is a Single Page App (SPA)
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+        {
+        //Console.WriteLine("WL.OnInitializedAsync");
+        Static_.cantInspect = 5;
+        Static_.BtnState = Static_.BtnState_Start;
+        Static_.IBSpecList = new List<IBSpec>();
+        Static_.IBSpecList.Add(new IBSpec(Static_.IBType.Checkbox1, "Checkbox Null", false));
+
+        await base.OnInitializedAsync();
+        }  // OnInitializedAsync
+    }

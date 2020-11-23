@@ -1,0 +1,70 @@
+﻿
+
+<div>
+
+    @if (IBSpec.CheckState)
+        {
+        <input type="checkbox"
+               id="box"
+               checked
+               @onchange="Checkbox_Changed"
+               />
+        }
+    else
+        {
+        <input type="checkbox"
+               id="box"
+               @onchange="Checkbox_Changed"
+               />
+        }
+
+    <label for="box">
+        @IBSpec.Title
+    </label>
+
+</div>
+
+    @code
+{
+        // style="position: absolute; top: @pxTop; left: @pxLeftBox" />
+        // style="position: absolute; top: @pxTop; left: @pxLeftLabel">
+
+        [Parameter]
+        public Static_.IBType IBType { get; set; }
+        protected IBSpec IBSpec { get; set; }
+
+        private string pxTop = "21px";
+        private string pxLeftBox = "15px";
+        private string pxLeftLabel = "33px";
+
+        protected override void OnInitialized()
+            {
+            InitComponent();
+
+            // Make this a Refresh listener
+            Static_.Refresh_Subscribe(Refresh, IBType.ToString());
+            } // OnInitialized
+
+        private void InitComponent()
+            {
+            // Gets the data for this IB
+            IBSpec = Static_.IBSpecList.Single(x => x.IBType == IBType);
+            Console.WriteLine(string.Format("IBCheckbox.Init:IBType: {0}; Name: '{1}'; Checked: {2}", IBType, IBSpec.Title, IBSpec.CheckState));
+            }
+
+        /// <summary>
+        /// Refreshes the IB with new data
+        /// </summary>
+        private void Refresh(object sender, EventArgs e)
+            {
+            InitComponent();
+
+            Console.WriteLine(string.Format("IBBase.Refresh: StateHasChanged / '{0}' / {1}", IBSpec.Title, IBSpec.CheckState));
+            StateHasChanged();
+            }
+
+        private void Checkbox_Changed(ChangeEventArgs e)
+            {
+            }
+
+        }

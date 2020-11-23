@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <button id="showTable" class="btn btn-primary" @onclick="Button_Comp1_True">Comp1 True</button>
+        <button id="showTable" class="btn btn-primary" @onclick="Button_Comp1_False">Comp1 False</button>
+        @*<a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>*@
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@code {
+    private void Button_Comp1_True()
+        {
+        var x0 = Static_.cantInspect;
+        var x1 = Static_.BtnState;
+
+        Static_.BtnState = Static_.BtnState_Comp1;
+        IBSpec ibSpec = Static_.IBSpecList.Single(x => x.IBType == Static_.IBType.Checkbox1);
+        ibSpec.Title = "Checkbox True";
+        ibSpec.CheckState = true;
+
+        Static_.Refresh_Throw(true);
+        }
+
+    private void Button_Comp1_False()
+        {
+        Static_.BtnState = Static_.BtnState_Comp1;
+        IBSpec ibSpec = Static_.IBSpecList.Single(x => x.IBType == Static_.IBType.Checkbox1);
+        ibSpec.Title = "Checkbox False";
+        ibSpec.CheckState = false;
+
+        Static_.Refresh_Throw(true);
+        }
+}
